@@ -1,0 +1,37 @@
+# Virtual Environment
+backend/venv/
+backend/.venv/
+.venv/
+venv/
+ENV/
+
+# Python Cache & Compilation
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local Databases
+backend/*.db
+*.db
+*.sqlite
+
+# Environment Configuration (Contains sensitive API Keys!)
+backend/.env
+.env
+.env.local
+.env.*.local
+
+# Node.js dependencies
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# IDE Configs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
