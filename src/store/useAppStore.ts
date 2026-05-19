@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { AuthUser, Project, UploadedFile, RequirementItem, ChatMessage, TimelineMilestone } from '../types';
-import { MOCK_USER } from '../mock/projectData';
+import { MOCK_USER, MOCK_PROJECTS } from '../mock/projectData';
 import { apiService } from '../services/apiService';
 
 interface AppState {
@@ -48,6 +48,7 @@ interface AppState {
   chatMessages: ChatMessage[];
   isChatStreaming: boolean;
   sendChatMessage: (text: string) => void;
+  loadMockData: () => void;
 }
 
 const INITIAL_CHAT_MESSAGES: ChatMessage[] = [
@@ -332,5 +333,12 @@ export const useAppStore = create<AppState>((set, get) => ({
         )
       }));
     }
+  },
+  loadMockData: () => {
+    set({
+      projects: MOCK_PROJECTS,
+      activeProjectId: MOCK_PROJECTS[0].id,
+      activeView: 'dashboard'
+    });
   }
 }));

@@ -13,7 +13,7 @@ import { UploadCloud, Cpu, BookOpen, Layers } from 'lucide-react';
 
 
 export const DashboardWorkspace: React.FC = () => {
-  const { projects, activeProjectId, activeQuadrantFocus, setActiveQuadrantFocus } = useAppStore();
+  const { projects, activeProjectId, activeQuadrantFocus, setActiveQuadrantFocus, loadMockData } = useAppStore();
 
   const openIngestionModal = () => {
     const modal = document.getElementById('ingestion-modal') as HTMLDialogElement;
@@ -57,13 +57,19 @@ export const DashboardWorkspace: React.FC = () => {
               </div>
 
               {/* Action Button */}
-              <div>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <button
                   onClick={openIngestionModal}
-                  className="px-8 py-3.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-200 shadow-xl shadow-indigo-500/15 hover:shadow-indigo-500/20 flex items-center space-x-2.5 mx-auto cursor-pointer border border-indigo-400/20 active:scale-98"
+                  className="px-8 py-3.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-200 shadow-xl shadow-indigo-500/15 hover:shadow-indigo-500/20 flex items-center space-x-2.5 cursor-pointer border border-indigo-400/20 active:scale-98"
                 >
                   <UploadCloud className="w-4 h-4" />
                   <span>Launch Ingestion Pipeline</span>
+                </button>
+                <button
+                  onClick={loadMockData}
+                  className="px-6 py-3.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 font-semibold text-sm transition cursor-pointer flex items-center space-x-2 active:scale-98"
+                >
+                  <span>Load Demo Data</span>
                 </button>
               </div>
 

@@ -3,8 +3,8 @@ from app.core.config import settings
 
 celery_app = Celery(
     "pi_worker",
-    broker=settings.RABBITMQ_URL,
-    backend=settings.REDIS_URL
+    broker=getattr(settings, "RABBITMQ_URL", None) or "memory://",
+    backend=getattr(settings, "REDIS_URL", None) or "db+sqlite:///./celery_results.db"
 )
 
 celery_app.conf.task_serializer = "json"

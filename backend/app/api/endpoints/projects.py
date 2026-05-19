@@ -50,9 +50,12 @@ async def upload_documents(
         db.add(UploadedFile(project_id=project_id, filename=file.filename, s3_key=file_location))
     db.commit()
 
+    rabbitmq_url = getattr(settings, "RABBITMQ_URL", None)
+    redis_url = getattr(settings, "REDIS_URL", None)
+
     # Fast-check if RabbitMQ and Redis are active before using Celery to prevent hanging
-    rabbitmq_online = is_service_online(settings.RABBITMQ_URL, 5672)
-    redis_online = is_service_online(settings.REDIS_URL, 6379)
+    rabbitmq_online = is_service_online(rabbitmq_url, 5672) if rabbitmq_url else False
+    redis_online = is_service_online(redis_url, 6379) if redis_url else False
 
     if rabbitmq_online and redis_online:
         try:

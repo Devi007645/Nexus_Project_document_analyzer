@@ -1,6 +1,6 @@
 from typing import List, Dict
 from pinecone import Pinecone, ServerlessSpec
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from app.core.config import settings
 
@@ -9,7 +9,7 @@ class VectorStoreManager:
         self.pc = Pinecone(api_key=settings.PINECONE_API_KEY)
         
         # Determine the dimension of the Pinecone index dynamically
-        dimension = 1024 # default fallback
+        dimension = 1536 # default fallback for OpenAI
         try:
             indexes = [idx.name for idx in self.pc.list_indexes()]
             if settings.PINECONE_INDEX_NAME in indexes:
@@ -22,12 +22,12 @@ class VectorStoreManager:
                 desc = self.pc.describe_index(settings.PINECONE_INDEX_NAME)
                 dimension = desc.dimension
         except Exception as e:
-            print(f"[VectorStore] Warning: Failed to fetch index dimension from Pinecone: {e}. Defaulting to 1024.")
+            print(f"[VectorStore] Warning: Failed to fetch index dimension from Pinecone: {e}. Defaulting to 1536.")
             
-        self.embeddings = GoogleGenerativeAIEmbeddings(
-            model="models/gemini-embedding-001",
-            google_api_key=settings.GEMINI_API_KEY,
-            output_dimensionality=dimension
+        self.embeddings = OpenAIEmbeddings(
+            model="text-embedding-3-small",
+            openai_api_key=settings.OPENAI_API_KEY,
+            dimensions=dimension
         )
 
     def _ensure_index(self):
@@ -38,7 +38,7 @@ class VectorStoreManager:
                 print(f"[VectorStore] Creating serverless Pinecone index '{settings.PINECONE_INDEX_NAME}'...")
                 self.pc.create_index(
                     name=settings.PINECONE_INDEX_NAME,
-                    dimension=1024, # Standard dimension
+                    dimension=1536, # Standard dimension for OpenAI
                     metric="cosine",
                     spec=ServerlessSpec(
                         cloud="aws",

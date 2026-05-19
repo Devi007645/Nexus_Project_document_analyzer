@@ -3,8 +3,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from app.core.config import settings
 
-# Fallback to SQLite if default PostgreSQL parameters are unchanged
-db_url = settings.POSTGRES_URL
+# Fallback to SQLite if default PostgreSQL parameters are unchanged or missing
+db_url = getattr(settings, "POSTGRES_URL", None) or "sqlite:///./project_intelligence.db"
 if db_url.startswith("postgresql://user:pass@"):
     db_url = "sqlite:///./project_intelligence.db"
 

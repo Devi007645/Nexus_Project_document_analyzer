@@ -4,7 +4,7 @@ from typing import Dict, Any
 from app.core.config import settings
 from app.services.document_parser import DocumentParser
 from app.services.vector_store import VectorStoreManager
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_openai import ChatOpenAI
 from app.workflow.state import ProjectState
 from app.schemas import (
     RequirementExtraction,
@@ -34,10 +34,10 @@ REQUIREMENTS:
 # ==============================================================================
 # SPECIALIZED AGENTS (LangGraph Nodes)
 # ==============================================================================
-agent_llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
+agent_llm = ChatOpenAI(
+    model="gpt-4o-mini",
     temperature=0.1,
-    google_api_key=settings.GEMINI_API_KEY
+    api_key=settings.OPENAI_API_KEY
 )
 
 def parse_documents_node(state: ProjectState) -> ProjectState:

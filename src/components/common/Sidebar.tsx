@@ -168,7 +168,7 @@ export const Sidebar: React.FC = () => {
       <div className="p-3 border-t border-zinc-800/80 bg-zinc-950/90 flex items-center justify-between">
         <div className="flex items-center space-x-2.5 overflow-hidden">
           <img
-            src={user?.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"}
+            src={user?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"}
             alt="User Avatar"
             className="w-8 h-8 rounded-full border border-zinc-700 object-cover shrink-0"
           />

@@ -3,6 +3,7 @@ import { Project, AuthUser } from '../types';
 export const MOCK_PROJECTS: Project[] = [
   {
     id: 'proj-fintech-01',
+    status: 'completed',
     name: 'Fintech Core Ledger Modernization',
     clientName: 'Aegis Global Banking',
     clientIndustry: 'Financial Services & Payments',
@@ -303,6 +304,7 @@ export const MOCK_PROJECTS: Project[] = [
   },
   {
     id: 'proj-health-02',
+    status: 'completed',
     name: 'Enterprise Medical RAG Knowledge Graph',
     clientName: 'Novartis Health Diagnostics',
     clientIndustry: 'Healthcare & Pharmaceuticals',
@@ -499,6 +501,7 @@ export const MOCK_PROJECTS: Project[] = [
   },
   {
     id: 'proj-logistics-03',
+    status: 'completed',
     name: 'Global Supply Chain IoT & Fleet AI Orchestrator',
     clientName: 'Maersk Logistics AI Lab',
     clientIndustry: 'Maritime & Global Logistics',

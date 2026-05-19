@@ -23,10 +23,10 @@ def run_pipeline_logic(project_id: str, file_paths: list):
         db.commit()
 
         # Check if the API keys are placeholders
-        is_default_gemini = not settings.GEMINI_API_KEY
+        is_default_openai = not settings.OPENAI_API_KEY or settings.OPENAI_API_KEY == "your-openai-key"
         is_default_pinecone = settings.PINECONE_API_KEY == "pcsk-your-pinecone-key" or not settings.PINECONE_API_KEY
 
-        if is_default_gemini or is_default_pinecone:
+        if is_default_openai or is_default_pinecone:
             print("--- [Pipeline] API keys not configured. Running Local Heuristic Parser ---")
             result = local_heuristic_parse(project_id, file_paths)
             db.query(Project).filter(Project.id == project_id).update({

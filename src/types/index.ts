@@ -95,6 +95,8 @@ export type ProjectRisk = {
 export type Project = {
   id: string;
   name: string;
+  status: 'processing' | 'completed' | 'failed';
+  error_message?: string | null;
   clientName: string;
   clientIndustry: string;
   aiSummary: string;

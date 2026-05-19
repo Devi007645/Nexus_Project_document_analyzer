@@ -1,0 +1,5 @@
+Project: Cloud Ledger API
+The platform must implement standard OAuth2 JWT token authentication to secure all user data.
+The system should achieve sub-second latency for all write requests under high concurrent load.
+All transaction ledgers must be encrypted at rest using AES-256.
+The system must expose a POST /api/v1/ledger endpoint to ingest transaction logs.

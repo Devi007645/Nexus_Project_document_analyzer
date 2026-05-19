@@ -12,7 +12,7 @@ import {
 import { useAppStore } from '../../store/useAppStore';
 
 export const LandingView: React.FC = () => {
-  const { setActiveView, resetIngestion } = useAppStore();
+  const { setActiveView, resetIngestion, loadMockData } = useAppStore();
   const [activeTab, setActiveTab] = useState<'architecture' | 'requirements' | 'timeline'>('architecture');
 
   const handleStartParsing = () => {
@@ -116,7 +116,7 @@ export const LandingView: React.FC = () => {
             <span>Start Parsing Project</span>
           </button>
           <button
-            onClick={() => setActiveView('dashboard')}
+            onClick={loadMockData}
             className="w-full sm:w-auto flex items-center justify-center space-x-2 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 px-6 py-4 rounded-lg font-semibold text-sm transition cursor-pointer"
           >
             <span>Explore Live Demo</span>

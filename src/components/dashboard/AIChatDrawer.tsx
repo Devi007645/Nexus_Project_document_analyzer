@@ -36,11 +36,11 @@ export const AIChatDrawer: React.FC = () => {
 
   if (!isChatDrawerOpen) return null;
 
-  const currentProject = projects.find((p) => p.id === activeProjectId) || projects[0];
+  const currentProject = projects.find((p) => p.id === activeProjectId) || projects[0] || null;
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!inputMsg.trim() || isChatStreaming) return;
+    if (!inputMsg.trim() || isChatStreaming || !currentProject) return;
     sendChatMessage(inputMsg.trim());
     setInputMsg('');
   };
@@ -118,7 +118,7 @@ export const AIChatDrawer: React.FC = () => {
                 </span>
               </h3>
               <p className="text-[11px] text-zinc-400 font-mono truncate">
-                Context: {currentProject.name} ({uploadedFiles.length} Docs)
+                Context: {currentProject ? currentProject.name : 'No Active Project'} ({currentProject ? uploadedFiles.length : 0} Docs)
               </p>
             </div>
           </div>
@@ -226,15 +226,21 @@ export const AIChatDrawer: React.FC = () => {
               type="text"
               value={inputMsg}
               onChange={(e) => setInputMsg(e.target.value)}
-              disabled={isChatStreaming}
-              placeholder={isChatStreaming ? "AI is typing..." : "Ask questions about uploaded documents, e.g. 'Generate Jira tickets'..."}
-              className="flex-1 bg-zinc-950 border border-zinc-800 focus:border-indigo-500 rounded-lg px-4 py-3 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none transition shadow-inner font-sans"
+              disabled={isChatStreaming || !currentProject}
+              placeholder={
+                !currentProject 
+                  ? "Please select or ingest a project first..." 
+                  : isChatStreaming 
+                    ? "AI is typing..." 
+                    : "Ask questions about uploaded documents, e.g. 'Generate Jira tickets'..."
+              }
+              className="flex-1 bg-zinc-950 border border-zinc-800 focus:border-indigo-500 rounded-lg px-4 py-3 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none transition shadow-inner font-sans font-normal"
             />
             <button
               type="submit"
-              disabled={!inputMsg.trim() || isChatStreaming}
+              disabled={!inputMsg.trim() || isChatStreaming || !currentProject}
               className={`p-3 rounded-lg flex items-center justify-center transition shadow-md shrink-0 cursor-pointer ${
-                !inputMsg.trim() || isChatStreaming
+                !inputMsg.trim() || isChatStreaming || !currentProject
                   ? 'bg-zinc-800 text-zinc-600 cursor-not-allowed opacity-50'
                   : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-500/25'
               }`}
